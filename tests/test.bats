@@ -47,8 +47,8 @@ teardown() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev add-on get ddev/ddev-adminerevo with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ddev/ddev-adminerevo >/dev/null 2>&1
+  echo "# ddev add-on get M-arcus/ddev-adminerevo with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get M-arcus/ddev-adminerevo >/dev/null 2>&1
   ddev restart >/dev/null 2>&1
   health_checks
 }
