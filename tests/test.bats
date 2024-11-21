@@ -5,9 +5,9 @@ setup() {
   load "${brew_prefix}/lib/bats-assert/load.bash"
 
   export DIR="$( cd "$( dirname "$BATS_TEST_FILENAME" )" >/dev/null 2>&1 && pwd )/.."
-  export TESTDIR=~/tmp/test-adminer
+  export TESTDIR=~/tmp/test-adminerevo
   mkdir -p $TESTDIR
-  export PROJNAME=test-adminer
+  export PROJNAME=test-adminerevo
   export DDEV_NON_INTERACTIVE=true
   ddev delete -Oy ${PROJNAME} >/dev/null 2>&1 || true
   cd "${TESTDIR}"
@@ -20,12 +20,12 @@ health_checks() {
   # ddev restart is required because we have done `ddev add-on get` on a new service
   run ddev restart
   assert_success
-  # Make sure we can hit the 9101 port successfully
-  curl -s -I -f https://${PROJNAME}.ddev.site:9101 >/tmp/curlout.txt
-  # Make sure `ddev adminer` works
-  DDEV_DEBUG=true run ddev adminer
+  # Make sure we can hit the 9103 port successfully
+  curl -s -I -f https://${PROJNAME}.ddev.site:9103 >/tmp/curlout.txt
+  # Make sure `ddev adminerevo` works
+  DDEV_DEBUG=true run ddev adminerevo
   assert_success
-  assert_output --partial "FULLURL https://${PROJNAME}.ddev.site:9101"
+  assert_output --partial "FULLURL https://${PROJNAME}.ddev.site:9103"
 }
 
 teardown() {
@@ -47,8 +47,8 @@ teardown() {
 @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev add-on get ddev/ddev-adminer with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-  ddev add-on get ddev/ddev-adminer >/dev/null 2>&1
+  echo "# ddev add-on get ddev/ddev-adminerevo with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev add-on get ddev/ddev-adminerevo >/dev/null 2>&1
   ddev restart >/dev/null 2>&1
   health_checks
 }
